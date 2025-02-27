@@ -1,7 +1,7 @@
 # 🧠 Streamlit Elo Dashboard
 
 ## 📌 프로젝트 개요
-**"Streamlit Elo Dashboard"**는 LLM (Large Language Model)의 응답을 클러스터링하고,  
+** "Streamlit Elo Dashboard" **는 LLM (Large Language Model)의 응답을 클러스터링하고,  
 Elo Rating System을 활용하여 피드백 기반 점수 변화를 시각적으로 분석하는 웹 애플리케이션입니다.
 
 이 대시보드는 다음과 같은 기능을 제공합니다:
@@ -17,7 +17,7 @@ Elo Rating System을 활용하여 피드백 기반 점수 변화를 시각적으
 ## 🚀 **데모**
 Streamlit Cloud에서 앱을 실행하여 대시보드를 직접 확인할 수 있습니다.
 
-🔗 **[Live Demo](https://your-app-name.streamlit.app)** (배포 후 URL 변경 필요)
+🔗 **[Live Demo]([https://your-app-name.streamlit.app](https://wellcheckai-elo-rating-dashboard.streamlit.app/))**
 
 ---
 
