@@ -206,5 +206,16 @@ if uploaded_base_file:
         
         # 📥 **혼합된 데이터 다운로드 버튼 추가**
         st.subheader("📥 혼합 데이터 다운로드 (690 + 221 합친 데이터)")
-        csv_combined = df_combined.to_csv(index=False, encoding="utf-8-sig").encode()
-        st.download_button("📥 혼합 데이터 다운로드", csv_combined, "combined_elo_data.csv", "text/csv")
+
+        # ✅ 저장할 컬럼만 선택
+        columns_to_keep = ["coach_no", "name", "quality", "created_at", "query", "answer", 
+                        "combined", "guide_index", "reason", "reason_detail", 
+                        "cluster", "cluster_avg_quality", "theme_of_cluster"]
+
+        df_combined_filtered = df_combined[columns_to_keep]  # 필요한 컬럼만 선택
+
+        # ✅ 인코딩 문제 해결 → `utf-8-sig`로 변경
+        csv_combined = df_combined_filtered.to_csv(index=False, encoding="utf-8-sig")
+
+        # ✅ Streamlit의 `download_button` 사용
+        st.download_button("📥 혼합 데이터 다운로드", csv_combined, "combined_elo_data.csv", "text/csv", key="download_csv")
