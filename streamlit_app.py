@@ -170,20 +170,8 @@ if uploaded_base_file:
             for _, row in increased_clusters.iterrows():
                 st.write(f"- 클러스터 {int(row['cluster'])} ({df_221[df_221['cluster'] == row['cluster']]['theme_of_cluster'].iloc[0]}) → {row['Elo 변화량']:.2f} 증가")
 
-        # 🔍 **Elo 점수 하락한 클러스터 필터링**
-        st.subheader("⚠️ Elo 점수 하락한 클러스터 분석")
-
-        # ✅ 전체 데이터(df_combined)에서 Elo 점수 변화량 계산
-        df_combined["Elo 변화량"] = df_combined["elo_new"] - df_combined["elo_old"]
-
-       # ✅ Elo 점수가 하락한 클러스터 필터링 (평균 Elo 기준)
-        decreased_clusters_combined = df_combined.groupby("cluster")["Elo 변화량"].mean().reset_index()
-
-        # ✅ **데이터 타입을 명확히 int로 변환 (클러스터 번호)**
-        decreased_clusters_combined["cluster"] = decreased_clusters_combined["cluster"].astype(int)
-        
-        # ✅ 실제 하락한 클러스터만 필터링 (Elo 변화량이 0보다 작은 경우만 선택)
-        true_decreased_clusters = decreased_clusters_combined[decreased_clusters_combined["Elo 변화량"] < 0]["cluster"].tolist()
+        # 📌 진짜 Elo 점수가 평균적으로 하락한 클러스터만 선택
+        true_decreased_clusters = decreased_clusters["cluster"].unique()  # 하락한 클러스터 리스트
         
         if len(true_decreased_clusters) > 0:
             # 📌 하락한 클러스터 중 하나 선택
