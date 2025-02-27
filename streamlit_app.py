@@ -178,6 +178,9 @@ if uploaded_base_file:
 
        # ✅ Elo 점수가 하락한 클러스터 필터링 (평균 Elo 기준)
         decreased_clusters_combined = df_combined.groupby("cluster")["Elo 변화량"].mean().reset_index()
+
+        # ✅ **데이터 타입을 명확히 int로 변환 (클러스터 번호)**
+        decreased_clusters_combined["cluster"] = decreased_clusters_combined["cluster"].astype(int)
         
         # ✅ 실제 하락한 클러스터만 필터링 (Elo 변화량이 0보다 작은 경우만 선택)
         true_decreased_clusters = decreased_clusters_combined[decreased_clusters_combined["Elo 변화량"] < 0]["cluster"].tolist()
