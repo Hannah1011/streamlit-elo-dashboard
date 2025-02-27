@@ -24,12 +24,22 @@ def tsne_visualization(df, title):
     reduced_data = tsne.fit_transform(np.vstack(df["embedding"].values))
     df["tsne_x"], df["tsne_y"] = reduced_data[:, 0], reduced_data[:, 1]
 
-    # ✅ 채도가 높고, 밝기가 낮은 팔레트 (Safe 사용)
-    unique_clusters = sorted(df["cluster"].unique())
-    color_palette = px.colors.qualitative.Safe
+    # unique_clusters = sorted(df["cluster"].unique())
+    # color_palette = px.colors.qualitative.Plotly 
+    
+     # ✅ **12개 클러스터에 대한 고유 색상 설정**
+    custom_colors = [
+   "#E63946", "#F77F00", "#FFD700", "#8B4513", "#2A9D8F", "#00A8E8",
+    "#1D3557", "#6A0DAD", "#A29BFE", "#FAD0EF", "#D62828", "#708090"
+    ]
 
+    # ✅ 클러스터 개수 확인
+    unique_clusters = sorted(df["cluster"].unique())
+    num_clusters = len(unique_clusters) 
+    color_palette = custom_colors[:num_clusters]
+    
     fig = px.scatter(df, x="tsne_x", y="tsne_y", color=df["cluster"].astype(str), 
-                     hover_data=["theme_of_cluster"], title=title,
+                     hover_data={"query": True, "theme_of_cluster": True}, title=title,
                      color_discrete_sequence=color_palette)
 
     return fig
@@ -54,7 +64,7 @@ def get_random_queries(df, cluster_id, top_n=3):
 st.title("🧠 Human Feedback Elo Dashboard")
 
 # 📌 Step 1: 690개 데이터 로드
-# df_690 = load_data(default_file_690)
+
 # 기존 데이터 업로드 기능 추가
 st.subheader("📂 기존 데이터 업로드")
 uploaded_base_file = st.file_uploader("📥 기존 데이터 파일을 업로드하세요. (.csv)", type=["csv"])
