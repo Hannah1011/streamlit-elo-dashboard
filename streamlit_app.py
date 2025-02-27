@@ -176,26 +176,28 @@ if uploaded_base_file:
         # ✅ 전체 데이터(df_combined)에서 Elo 점수 변화량 계산
         df_combined["Elo 변화량"] = df_combined["elo_new"] - df_combined["elo_old"]
 
-        # ✅ Elo 점수가 하락한 클러스터 필터링 (평균 Elo 기준)
-        decreased_clusters_combined = df_combined.groupby("cluster")["Elo 변화량"].mean()
-        true_decreased_clusters = decreased_clusters_combined[decreased_clusters_combined < 0].index.tolist()
-
+       # ✅ Elo 점수가 하락한 클러스터 필터링 (평균 Elo 기준)
+        decreased_clusters_combined = df_combined.groupby("cluster")["Elo 변화량"].mean().reset_index()
+        
+        # ✅ 실제 하락한 클러스터만 필터링 (Elo 변화량이 0보다 작은 경우만 선택)
+        true_decreased_clusters = decreased_clusters_combined[decreased_clusters_combined["Elo 변화량"] < 0]["cluster"].tolist()
+        
         if len(true_decreased_clusters) > 0:
             # 📌 하락한 클러스터 중 하나 선택
             cluster_decrease_selected = st.selectbox(
                 "하락한 클러스터 선택", sorted(true_decreased_clusters)
             )
-
+        
             # 📌 선택한 클러스터의 문제 응답 데이터 보기
             st.write(f"**📌 클러스터 {int(cluster_decrease_selected)} - Elo 점수 하락 사유 분석**")
-
+        
             # **Elo 점수 하락 클러스터에서 query, answer, reason, reason_detail 만 보기**
             columns_to_show = ["query", "answer", "reason", "reason_detail"]
             filtered_decreased_data = df_combined[df_combined["cluster"] == cluster_decrease_selected][columns_to_show]
-
+        
             # 📌 **데이터 표 출력**
             st.dataframe(filtered_decreased_data)
-
+        
         else:
             st.success("✅ Elo 점수가 하락한 클러스터가 없습니다!")
         
