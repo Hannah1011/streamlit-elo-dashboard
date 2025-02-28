@@ -19,7 +19,7 @@
 ## 🚀 **데모**
 Streamlit Cloud에서 앱을 실행하여 대시보드를 직접 확인할 수 있습니다.
 
-🔗 **[Live Demo]https://wellcheckai-elo-rating-dashboard.streamlit.app/ **
+🔗 **[Live Demo]** https://wellcheckai-elo-rating-dashboard.streamlit.app/
 
 ---
 
